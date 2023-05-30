@@ -1,0 +1,448 @@
+
+body {
+	font-family:sans-serif;
+	background: #fff;
+	
+	padding: 0px;
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+}
+
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+ul {
+	list-style:none;
+	padding:10px;
+}
+
+ul li {
+	float:left;
+	line-height:21px;
+	margin:2px 0;
+}
+
+.absent-info span {
+	float:left;
+	margin-right:10px;
+	width:5px;
+	height:20px;
+}
+
+.border-levy{
+    border-left: 1px solid rgba(0,0,0,0.10);
+}
+.border-pravy{
+    border-right: 1px solid rgba(0,0,0,0.10);
+}
+
+.border-spodni{
+    /*border-bottom: 1px solid rgba(0,0,0,0.10);*/
+}
+.border-horni{
+    border-top: 1px solid rgba(0,0,0,0.10);
+}
+
+
+#schedule {
+	width: 100%;
+	visibility:hidden;
+}
+
+.day-item {
+	cursor: pointer;
+	position:relative;
+}
+.day-item-hover:hover, .multi:hover {
+	background-color: pink !important;
+}
+
+/******* SIRKY ***************/
+#hours .day-name, .day-row .day-name { 
+	max-width: 40px;
+	/*width: 4.15%;*/
+}
+#hours .item,  .day-row .day-item { 
+	max-width: 71px;
+	/*width: 7.3%;*/
+	box-sizing: border-box;
+}
+
+
+/********* Hours *************/
+#hours {
+	width: 100%;
+	
+}
+#hours .day-name {
+	float: left;
+	min-height: 37px;
+}
+#hours .item {
+	min-height: 37px;
+	float: left;
+	padding-top: 2px
+}
+#hours .item .num {
+	font-size:14px;
+	font-weight: 600;
+	color:#00A2E2;
+	line-height:16px;
+	min-height: 16px;
+	text-align:center;
+	
+	
+}
+#hours .item .hour {
+	font-size:10px;
+	color:#79878D;
+	line-height:12px;
+	min-height: 23px;
+	text-align:center;
+}	
+
+#hours .odd {
+	background: rgba(0,0,0,0.02);
+}
+
+
+
+/***************** Days *********************/
+
+.day-row {
+	/*background: #FFF;*/
+	text-align: center;
+	/*border-bottom: 1px solid #fff;*/
+	/*background: #fff;*/
+	
+	
+}
+.odd-day-row {
+	background: #FAFAFA;
+}
+.day-item .empty {
+	width: 98.59%;
+	min-height: 71px;
+	background:rgba(0,0,0,0.10);
+	border-left: 1px solid #fff;
+}
+
+.day-row .odd {
+	background:rgba(0,0,0,0.02);
+}
+
+
+.day-row .day-name {
+	float: left;
+	min-height: 71px;
+	font-size:14px;
+	color:#00A2E2;
+	display: flex;
+  	justify-content: center;
+  	flex-direction: column;
+}
+.day-row .day-name div span {
+	font-size:10px;
+	color:#79878D;
+	line-height:12px;
+	text-align:center; 
+}	
+
+
+.day-row .day-item {
+	min-height: 71px;
+	float: left;
+	position: relative;
+	overflow:hidden;
+}
+
+.day-row .day-item .top {
+	position: absolute; top: 0px;
+	padding: 3px 3px 0px;
+	width: 91.549%;
+	font-size:10px;
+	line-height: 12px;
+}
+.day-row .day-item .top .left {
+	font-size:9px;
+	color:#00A2E2;
+	line-height:12px;
+	float:left;
+    height:33px;
+    width:60%;
+    text-align:left;
+    overflow:hidden;
+}
+@-moz-document url-prefix() {
+	.day-row .day-item .top .left {
+		letter-spacing:-0.05em;
+	}
+}
+
+/*
+		NoAbsent = 0,       // bez absence
+        Absent = 1,         // absence studenta			#00a2e2 
+        AbsentOk = 2,       // omluvená absence			#59942c 
+        AbsentMiss = 3,     // neomluvená absence		#c20e1a 
+        AbsentLate = 4,     // pozdní příchod			#f26600
+        AbsentSchool = 5,   // nezapočtená absence		#a4c123
+        AbsentSoon = 6      // dřívější odchod			#f29100
+
+*/
+
+.day-row .day-item .absence {
+	position:absolute;
+	bottom:0;
+	left:1px;
+	right:1px;
+	height:3px;
+}
+
+._Absent {
+	background-color:#00a2e2;
+}
+
+._AbsentOk {
+	background-color:#59942c;
+}
+
+._AbsentMiss {
+	background-color:#c20e1a;
+}
+
+._AbsentLate {
+	background-color:#f26600;
+}
+
+._AbsentSchool {
+	background-color:#a4c123;
+}
+
+._AbsentSoon {
+	background-color:#f29100;
+}
+
+.day-row .day-item .top .right {
+	font-size:10px;
+	color:#79878D;
+	line-height:12px;
+	float: right;
+	text-align:right;
+	width:40%;
+}
+.day-row .day-item .top .right .first {
+	min-height: 12px;
+}	
+.day-row .day-item .top .right .ico {
+	width: 13px;
+	height: 13px;
+	padding: 2px; 
+}
+.day-row .day-item .middle {
+	font-size:20px;
+	color:#00A2E2;
+	line-height:26px;
+	height: 26px;
+	vertical-align: middle;
+	text-align:center;
+	padding-top: 20px;
+	
+}
+
+.day-row .middle a {
+	color: #00A2E2;
+}
+.day-row .day-item .bottom {	
+	width: 100%;
+	font-size:12px;
+	font-weight: 600;
+	color:#79878D;
+	line-height:12px;
+	text-align:center;
+}	
+
+
+.day-row .sep {
+	border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+
+div.multi+div.multi:before {
+    content: "";    
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.day-row .multi {
+	height: 43px !important;
+	position: relative;
+}
+.day-row .multi .top {
+	padding-top: 0px;
+	
+}
+.day-row .multi .middle {
+	height:16px;
+	font-size: 16px;
+	line-height: 16px;
+	padding-top: 14px;
+}
+.day-row .mutli .bottom {
+	height: 11px;
+	font-size: 11px;
+}
+
+.bubble .line{
+    display: block;
+    text-align: left;
+}
+
+.bubble span.clear-left, .clear-items > .item {
+	clear:left;
+}
+
+.bubble .item {
+	line-height:16px;
+}
+
+.bubble .clear-items .item {
+	line-height:13px;
+}
+
+.bubble .hw-label {
+	line-height:16px;
+	margin-right:3px;
+}
+
+.bubble .bold{
+    font-weight: bold;
+}
+
+/********* COLORS **************************/
+.pink {
+	background:rgba(194,14,25,0.20) !important;
+}
+.pink .top .left {
+	color:#C20E1A !important;
+}
+.pink .middle {
+	color:#C20E1A !important;
+}
+.pink .tooltip {
+	background:#a80c16;
+}
+
+.orange {
+	background:rgba(242,145,0,0.20) !important;
+}
+.orange .top .left {
+	color:#F29100 !important;
+}
+.orange .middle {
+	color:#F29100 !important;
+}
+.orange .tooltip {
+	background:#d98200;
+}
+
+.green > div {
+	width: 98.59%;
+	border-left: 1px solid #fff;
+	background:rgba(88,148,44,0.20) !important;
+}
+
+.green .middle {
+	color:#59942C !important;
+}
+
+.green .tooltip {
+	background:#4a7a25;
+}
+
+.blue .tootip {
+	background:#0090c9;
+}
+
+.zapsano{
+    color: #B35900 !important;
+}
+
+
+/**************** ICONS **********************/
+.prev {
+	height: auto;
+	max-width: 71px;
+	width: 100%;
+}
+.next {
+	height: auto;
+	max-width: 71px;
+	width: 100%;
+	position: absolute; bottom: 0px;
+}
+
+.prev .disable {
+	background: url("../images/rozvrh/prev.png") no-repeat;
+	display: block;
+    height: 0;
+    background-size: 100%;
+    padding-bottom:39%; /* bg-height / bg-width * 100*/
+	
+}
+.prev .active {
+	background: url("../images/rozvrh/prev-active.png") no-repeat;
+    display: block;
+    height: 0;
+    background-size: 100%;
+    padding-bottom:39%; /* bg-height / bg-width * 100*/
+}
+.next .disable {
+	background: url("../images/rozvrh/next.png") no-repeat center bottom;
+	display: block;
+    height: 0;
+    background-size: 100%;
+    padding-bottom:39%; /* bg-height / bg-width * 100*/
+}
+.next .active {
+	background: url("../images/rozvrh/next-active.png") no-repeat center bottom;
+	display: block;
+    height: 0;
+    background-size: 100%;
+    padding-bottom:39%; /* bg-height / bg-width * 100*/
+}
+
+
+
+/***************** PRINT *********************/
+
+.print .day-row .day-item .top .left {
+	font-size:10px; 
+	color:#555555;
+}
+.print .day-row .day-item {
+	border-left: 1px solid #e8e8e8;
+	border-top: 1px solid #e8e8e8;
+}
+.print .day-row .empty, .print .day-row .green {
+	border-left: 1px solid #fff;
+	border-top: 1px solid #fff;
+}
+.print .odd-day-row {
+	background: #fff;
+}
+.print .odd-day-row .empty {
+	background: rgba(0,0,0,0.1);
+}
+.print .empty {
+	background: rgba(0,0,0,0.07);
+}

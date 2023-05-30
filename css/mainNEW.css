@@ -1,0 +1,267 @@
+body{
+	padding:0px;
+	margin: 0px;
+	/*font-family: "Arial Black", Gadget, sans-serif;*/
+	overflow-y: hidden;
+	overflow-x: hidden;
+	background-image: url(https://spsul.bakalari.cz/next/images/LOGIN/login-bg.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+td{
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size: 18px;
+	text-align: center;
+}
+ul{
+	list-style-type: none;
+}
+li::before { 
+    content: "• ";
+}
+#nadpis{
+	font-size: 23px;
+	width: 1200px;
+}
+#nadpis td{
+	font-size: 22px;
+	line-height: 23px;
+	width: 100%;
+	margin-bottom: 14px;
+}
+#nadpis .tabletitle{
+	font-size: 26px;
+	line-height: 33px;
+}
+.substitutetable tr{
+	font-family: 'Open Sans', sans-serif;
+	height: 51.58px;
+}
+.sude{
+	background-color: #cccccc;
+}
+.liche{
+	background-color: #e5e5e5;
+}
+.rozvrh{
+	overflow: hidden;
+}
+.page{
+	width: 100%;
+	height: 1080px;
+	margin: 0 auto;
+	/*background-image: linear-gradient(#ffffff,#cccccc);*/
+	background-image: url(https://spsul.bakalari.cz/next/images/LOGIN/login-bg-topright.png), url(https://spsul.bakalari.cz/next/images/LOGIN/login-bg-bottomleft.png);
+    background-position: right top 16%, left bottom;
+    background-repeat: no-repeat, no-repeat;
+	/*border: solid gray 2px;*/
+}
+.title table{
+	color:white;
+}
+.navbar{
+	height: 80px;
+	width: 100%;
+	background-color: #2b2b2b;
+	font-family: 'Open Sans', sans-serif;
+}
+.navbar .logo{
+	height: 60px;
+	width: 250px;
+	margin-top:5px;
+	margin-left:5px;
+	float:left;
+	background-size: cover;
+}
+.navbar .time{
+	float:right;
+	color:white;
+
+}
+.navbar .time p{
+	font-size: 80px;
+	margin-top: -15px;
+	margin-right:20px;
+	margin-bottom: 0px;
+}
+.rozvrh{
+	/*height: 485px;*/
+}
+#schedule{
+}
+#schoolTommorow{
+}
+.rozvrhR{
+	height: auto;
+}
+#training{
+
+}
+#actualtime{
+	/*font-family: erasBoldITC;*/
+	font-weight: bold;
+}
+#date{
+	font-size: 40px;
+}
+.rtitle{
+	height: 50px;
+	width: 100%;
+	background-color: #2b2b2b;
+	overflow:hidden;
+	position: absolute;
+	z-index: 1;
+}
+.notification{
+	width: 1846px;
+	height: 53px;
+	/*background-color: rgb(246,245,245);*/
+	position: absolute;
+	margin: 0 auto;
+	font-size:30px;
+	/*border: solid #2b2b2b 3px;*/
+	font-family: 'Open Sans', sans-serif;
+}
+.notification p{
+	margin-top:5px;
+	float:left;
+
+}
+.notificationbar{
+	width: 1786px;
+	height: 385px;
+	/*background-color: rgb(229,229,229);*/
+	/*border: solid #2b2b2b 3px;
+	border-top: none;*/
+	font-family: 'Open Sans', sans-serif;
+	font-size: 25px;
+}
+
+.notificationbar p{
+	margin-left:20px;
+	font-size: 20px;
+}
+.notificationbar p::before { 
+    content: "âž¤ ";
+}
+.notification div{
+	width: 50px;
+	height: 50px;
+
+	background-size: cover;
+	float:left;
+	margin-left:10px;
+	margin-top:2px;
+}
+
+
+.notificationR{
+	width: 1846px;
+	height: 53px;
+	/*background-color: rgb(246,245,245);*/
+	position: absolute;
+	margin: 0 auto;
+	margin-left: 35px;
+	font-size:30px;
+	/*border: solid #2b2b2b 3px;*/
+	font-family: 'Open Sans', sans-serif;
+}
+.notificationR p{
+	margin-top:5px;
+	margin-left:10px;
+	float:left;
+
+}
+.tabletitle{
+	background-color: #404040;
+    font-weight: normal;
+    color: white;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+}
+#nadpis .liche{
+	background-color: rgba(0,0,0,0.03);
+}
+#nadpis .sude{
+	background-color: rgba(255,255,255,0.33);
+}
+.notificationRbar{
+	overflow: hidden;
+	position: absolute;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 25px;
+}
+
+.notificationRbar p{
+	margin-left:20px;
+	font-size: 20px;
+}
+.notificationRbar p::before { 
+    content: "âž¤ ";
+}
+.notificationR div{
+	width: 50px;
+	height: 50px;
+
+	background-size: cover;
+	float:left;
+	margin-left:10px;
+	margin-top:2px;
+}
+
+#ringing{
+	position: absolute;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+right: 0;
+text-align: center;
+	color: white;
+	width: 100%;
+	margin-top: 25px;
+	font-size: 25px;
+   /*font-family: erasBoldITC;*/
+}
+.cleaner{
+	clear:both;
+}
+/*@font-face {
+   font-family: erasBoldITC;
+   src: url(../fonts/ErasBoldITC.ttf);
+}*/
+.rozvrhName{
+	color: black;
+	font-size: 25px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+   	/*font-family: erasBoldITC;*/
+}
+
+@media (min-width: 1200px){
+	.container {
+	    width: 100%;
+	}
+}
+@media (min-width: 992px){
+	.container {
+	    width: 100%;
+	}
+}
+@media (min-width: 768px){
+	.container {
+	    width: 100%;
+	}
+}
+.col-xs-6 {
+    width: 48%;
+}
+.col-xs-1 {
+	width: 3.333333%;
+}
+.col-xs-10F{
+	margin-left: 8.35%;
+	width: 1200px;
+}
