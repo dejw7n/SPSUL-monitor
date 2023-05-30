@@ -50,7 +50,7 @@ error_reporting(0);
             }
         }
     </script>
-    <link rel="stylesheet" href="css/rozvrhyNEW.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/timetable.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" media="screen" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
     <!-- <link rel="stylesheet" href="css/mainNEW.css" type="text/css" media="screen" /> -->

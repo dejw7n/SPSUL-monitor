@@ -435,58 +435,66 @@ $(document).ready(function () {
 
 			s += 5;
 		}
-		if (suplSseas.length > 0) {
-			if (sup > 10) {
-				if (r >= sup) r = 0;
+		if (k2 > 5) {
+			if (s2 >= k2) s2 = 0;
 
-				for (var i = 0; i < sup; i++) {
-					$(".sup" + i).hide();
-				}
+			$(".day-rows").hide();
 
-				for (var i = r; i < r + 10; i++) {
-					if (i < sup) {
-						$(".sup" + i).show();
-					}
+			for (var i = s2; i < s2 + 5; i++) {
+				if (i < k2) {
+					$(".rows" + i).show();
 				}
-				r += 10;
 			}
-		} else {
-			if (k2 > 5) {
-				if (s2 >= k2) s2 = 0;
 
-				$(".day-rows").hide();
-
-				for (var i = s2; i < s2 + 5; i++) {
-					if (i < k2) {
-						$(".rows" + i).show();
-					}
-				}
-
-				s2 += 5;
-			}
+			s2 += 5;
 		}
-		if (hid.length > 0) {
-			if (ozn) {
-				var oznT = '<tr class="tabletitle"><td class="tabletitle">Oznámení</td></tr>';
-				for (var i = 0; i < hid.length; i++) {
-					if (i % 2 == 0) oznT += "<tr class='sude'><td>" + hid[i] + "</td></tr>";
-					else oznT += "<tr class='liche'><td>" + hid[i] + "</td></tr>";
-				}
-				$("#nadpis").html(oznT);
-				ozn = false;
-			} else {
-				var oznT = '<tr class="tabletitle"><td class="tabletitle">Oznámení</td></tr>';
-				for (var i = 1; i < see.length - 1; i++) {
-					if (i % 2 == 0) oznT += "<tr class='liche'><td>" + see[i] + "</td></tr>";
-					else oznT += "<tr class='sude'><td>" + see[i] + "</td></tr>";
-				}
-				$("#nadpis").html(oznT);
-				ozn = true;
-			}
-		}
-
-		$(".col-xs-10F").css({ marginLeft: ($(window).width() - 1200) / 2 + "px" });
 	}
+	let timetableCycle = 1;
+	let timetableTimer = 0;
+	let timetableNextTime = 8000;
+	let timetableProgressElements = document.querySelectorAll("#timetableProgress");
+	let timetableProgressNowElements = document.querySelectorAll("#timetableProgressNow");
+	let timetableProgressMaxElement = document.querySelectorAll("#timetableProgressMax");
+	function refreshTimetableSpans() {
+		timetableProgressNowElements.forEach((element) => {
+			element.innerHTML = timetableCycle;
+		});
+		timetableProgressMaxElement.forEach((element) => {
+			element.innerHTML = Math.ceil(k / 5);
+		});
+	}
+	function initTimetableProgress() {
+		timetableProgressElements.forEach((element) => {
+			element.style.width = "0%";
+			element.style.transitionDuration = timetableNextTime + "ms";
+		});
+		refreshTimetableSpans();
+	}
+	function everyTimetableProgress() {
+		console.log(k);
+		timetableTimer += 1000;
+		if (timetableTimer > timetableNextTime) {
+			scrollRozvrh();
+			if (timetableCycle >= Math.ceil(k / 5)) {
+				timetableCycle = 0;
+			}
+			timetableCycle++;
+			timetableTimer = 0;
+			timetableProgressElements.forEach((element) => {
+				element.style.transitionDuration = "0ms";
+				element.style.width = 0 + "%";
+			});
+		} else {
+			timetableProgressElements.forEach((element) => {
+				element.style.transitionDuration = timetableNextTime + "ms";
+				element.style.width = 100 + "%";
+			});
+		}
+		refreshTimetableSpans();
+	}
+
+	initTimetableProgress();
+	setInterval(everyTimetableProgress, 1000);
 	function canceled(cancel, hour) {
 		for (var i = 0; i < cancel.length; i++) {
 			if (cancel[i] == hour) return true;
@@ -630,35 +638,6 @@ $(document).ready(function () {
 	}
 	k = tmpK;
 
-	var x = 0;
-	var tmpX = [];
-	for (var i = 0; i < $("#nadpis").children().length; i++) {
-		if (isVisible($("#nadpis").children().eq(i))) {
-			see.push($("#nadpis").children().eq(i).text());
-		} else {
-			x++;
-			if (x == 1) {
-				hid.push(
-					$("#nadpis")
-						.children()
-						.eq(i - 1)
-						.text()
-				);
-				tmpX.push(
-					$("#nadpis")
-						.children()
-						.eq(i - 1)
-				);
-			}
-			hid.push($("#nadpis").children().eq(i).text());
-			tmpX.push($("#nadpis").children().eq(i));
-		}
-	}
-	for (var i = 0; i < tmpX.length; i++) {
-		tmpX[i].remove();
-	}
-	var tm = setInterval(scrollRozvrh, 8000);
-
 	var sup = $(".suplov").length;
 
 	if (k >= 6) s = 6;
@@ -667,8 +646,6 @@ $(document).ready(function () {
 	if (sup >= 10) r = 10;
 	else r = sup;
 
-	findZvoneni();
-	console.log($(window).width());
 	$(".col-xs-10F").css({ marginLeft: ($(window).width() - 1200) / 2 + "px" });
 });
 
