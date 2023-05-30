@@ -518,11 +518,15 @@ $(document).ready(function () {
 			if (is) tmpS += addClass(ar[i][0][1]);
 			else tmpS += addClass2(ar[i][0][1]);
 
+			let emptyCount = 0;
 			for (var j = 0; j <= 10; j++) {
 				var tmpSb = fndsbj(ar[i][3], j);
 				if (tmpSb == -5) {
 					if (canceled(ar[i][1], j)) tmpS += emptyOdpadla();
-					else tmpS += emptySubject();
+					else {
+						emptyCount++;
+						tmpS += emptySubject();
+					}
 				} else {
 					if (canceled(ar[i][1], j)) {
 						if (ar[i][3][tmpSb][2][1] == "" && ar[i][3][tmpSb][2][2] == "") {
@@ -608,9 +612,14 @@ $(document).ready(function () {
 					}
 				}
 			}
-			if (!r) {
-				tmpS += "<span></span></div></div></div>";
-				rozvrh += tmpS;
+			if (emptyCount !== 11) {
+				if (!r) {
+					tmpS += "<span></span></div></div></div>";
+					rozvrh += tmpS;
+				} else {
+					k--;
+					k2--;
+				}
 			} else {
 				k--;
 				k2--;

@@ -1,11 +1,7 @@
 <?php
-try {
-    include 'php/sseas.php';
-} catch (Exception $e) {
-}
+$sseasSupl = [];
+$sseasOzn = [];
 
-?>
-<?php
 function findSupl($cancel, $hour)
 {
     for ($i = 0; $i < count($cancel); $i++) {
@@ -82,10 +78,18 @@ function findIt($a, $b)
 }
 function findIfResslovka($char)
 {
-    if (is_numeric($char)) {
-        return true;
+    if (htmlspecialchars($_GET['stredisko']) == 'stribrniky') {
+        if (is_numeric($char)) {
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        if (is_numeric($char)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 function copyArrayTo($ar1, $ar2)
@@ -268,7 +272,7 @@ for ($i = 0; $i < count($classes); $i++) {
     $json3 = json_encode($xml3);
     $array3 = json_decode($json3, true);
     $day = [];
-    if (is_array($array3['Cells']['TimetableCell'])) {
+    if (isset($array3['Cells']['TimetableCell']) && is_array($array3['Cells']['TimetableCell'])) {
         for ($j = 0; $j < count($array3['Cells']['TimetableCell']); $j++) {
             if ($array3['Cells']['TimetableCell'][$j]['DayIndex'] == $dayIndex) {
                 $tmp = [];
@@ -452,7 +456,7 @@ if (count($sseasSupl) == 0) {
             $json3 = json_encode($xml3);
             $array3 = json_decode($json3, true);
             $day = [];
-            if (is_array($array3['Cells']['TimetableCell'])) {
+            if (isset($array3['Cells']['TimetableCell']) && is_array($array3['Cells']['TimetableCell'])) {
                 for ($j = 0; $j < count($array3['Cells']['TimetableCell']); $j++) {
                     if ($array3['Cells']['TimetableCell'][$j]['DayIndex'] == $dayIndex) {
                         $tmp = [];
