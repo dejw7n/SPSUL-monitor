@@ -421,80 +421,14 @@ $(document).ready(function () {
 			$(".substitutetable").html($(".substitutetable").html() + '<tr class="sude sup0 suplov" style="background-color: transparent;height: 150px;"><td colspan="5"><strong>Žádné suplování není pro dnešní den plánováno.</strong></td></tr>');
 		}
 	}
-	function scrollRozvrh() {
-		if (k > 5) {
-			if (s >= k) s = 0;
-
-			$(".day-rowf").hide();
-
-			for (var i = s; i < s + 5; i++) {
-				if (i < k) {
-					$(".rowf" + i).show();
-				}
-			}
-
-			s += 5;
-		}
-		if (k2 > 5) {
-			if (s2 >= k2) s2 = 0;
-
-			$(".day-rows").hide();
-
-			for (var i = s2; i < s2 + 5; i++) {
-				if (i < k2) {
-					$(".rows" + i).show();
-				}
-			}
-
-			s2 += 5;
-		}
-	}
-	let timetableCycle = 1;
-	let timetableTimer = 0;
-	let timetableNextTime = 8000;
-	let timetableProgressElements = document.querySelectorAll("#timetableProgress");
-	let timetableProgressNowElements = document.querySelectorAll("#timetableProgressNow");
-	let timetableProgressMaxElement = document.querySelectorAll("#timetableProgressMax");
-	function refreshTimetableSpans() {
-		timetableProgressNowElements.forEach((element) => {
-			element.innerHTML = timetableCycle;
-		});
-		timetableProgressMaxElement.forEach((element) => {
-			element.innerHTML = Math.ceil(k / 5);
-		});
-	}
-	function initTimetableProgress() {
-		timetableProgressElements.forEach((element) => {
-			element.style.width = "0%";
-			element.style.transitionDuration = timetableNextTime + "ms";
-		});
-		refreshTimetableSpans();
-	}
-	function everyTimetableProgress() {
-		console.log(k);
-		timetableTimer += 1000;
-		if (timetableTimer > timetableNextTime) {
-			scrollRozvrh();
-			if (timetableCycle >= Math.ceil(k / 5)) {
-				timetableCycle = 0;
-			}
-			timetableCycle++;
-			timetableTimer = 0;
-			timetableProgressElements.forEach((element) => {
-				element.style.transitionDuration = "0ms";
-				element.style.width = 0 + "%";
-			});
-		} else {
-			timetableProgressElements.forEach((element) => {
-				element.style.transitionDuration = timetableNextTime + "ms";
-				element.style.width = 100 + "%";
-			});
-		}
-		refreshTimetableSpans();
-	}
-
-	initTimetableProgress();
-	setInterval(everyTimetableProgress, 1000);
+	// function oznameni() {
+	// 	var oznT = '<tr class="tabletitle"><td class="tabletitle">Oznámení</td></tr>';
+	// 	for (var i = 0; i < oznSseas.length; i++) {
+	// 		if (i % 2 == 0) oznT += "<tr class='sude'><td>" + oznSseas[i] + "</td></tr>";
+	// 		else oznT += "<tr class='liche'><td>" + oznSseas[i] + "</td></tr>";
+	// 	}
+	// 	$("#nadpis").html(oznT);
+	// }
 	function canceled(cancel, hour) {
 		for (var i = 0; i < cancel.length; i++) {
 			if (cancel[i] == hour) return true;
@@ -518,15 +452,11 @@ $(document).ready(function () {
 			if (is) tmpS += addClass(ar[i][0][1]);
 			else tmpS += addClass2(ar[i][0][1]);
 
-			let emptyCount = 0;
 			for (var j = 0; j <= 10; j++) {
 				var tmpSb = fndsbj(ar[i][3], j);
 				if (tmpSb == -5) {
 					if (canceled(ar[i][1], j)) tmpS += emptyOdpadla();
-					else {
-						emptyCount++;
-						tmpS += emptySubject();
-					}
+					else tmpS += emptySubject();
 				} else {
 					if (canceled(ar[i][1], j)) {
 						if (ar[i][3][tmpSb][2][1] == "" && ar[i][3][tmpSb][2][2] == "") {
@@ -612,14 +542,9 @@ $(document).ready(function () {
 					}
 				}
 			}
-			if (emptyCount !== 11) {
-				if (!r) {
-					tmpS += "<span></span></div></div></div>";
-					rozvrh += tmpS;
-				} else {
-					k--;
-					k2--;
-				}
+			if (!r) {
+				tmpS += "<span></span></div></div></div>";
+				rozvrh += tmpS;
 			} else {
 				k--;
 				k2--;
@@ -647,6 +572,128 @@ $(document).ready(function () {
 	}
 	k = tmpK;
 
+	// oznameni();
+	// var x = 0;
+	// var tmpX = [];
+	// for (var i = 0; i < $("#nadpis").children().length; i++) {
+	// 	if (isVisible($("#nadpis").children().eq(i))) {
+	// 		see.push($("#nadpis").children().eq(i).text());
+	// 	} else {
+	// 		x++;
+	// 		if (x == 1) {
+	// 			hid.push(
+	// 				$("#nadpis")
+	// 					.children()
+	// 					.eq(i - 1)
+	// 					.text()
+	// 			);
+	// 			tmpX.push(
+	// 				$("#nadpis")
+	// 					.children()
+	// 					.eq(i - 1)
+	// 			);
+	// 		}
+	// 		hid.push($("#nadpis").children().eq(i).text());
+	// 		tmpX.push($("#nadpis").children().eq(i));
+	// 	}
+	// }
+	// for (var i = 0; i < tmpX.length; i++) {
+	// 	tmpX[i].remove();
+	// }
+
+	function scrollRozvrh() {
+		if (k > 5) {
+			if (s >= k) s = 0;
+
+			$(".day-rowf").hide();
+
+			for (var i = s; i < s + 5; i++) {
+				if (i < k) {
+					$(".rowf" + i).show();
+				}
+			}
+
+			s += 5;
+		}
+		if (suplSseas.length > 0) {
+			if (sup > 10) {
+				if (r >= sup) r = 0;
+
+				for (var i = 0; i < sup; i++) {
+					$(".sup" + i).hide();
+				}
+
+				for (var i = r; i < r + 10; i++) {
+					if (i < sup) {
+						$(".sup" + i).show();
+					}
+				}
+				r += 10;
+			}
+		} else {
+			if (k2 > 5) {
+				if (s2 >= k2) s2 = 0;
+
+				$(".day-rows").hide();
+
+				for (var i = s2; i < s2 + 5; i++) {
+					if (i < k2) {
+						$(".rows" + i).show();
+					}
+				}
+
+				s2 += 5;
+			}
+		}
+		// $(".col-xs-10F").css({ marginLeft: ($(window).width() - 1200) / 2 + "px" });
+	}
+	let timetableCycle = 1;
+	let timetableTimer = 0;
+	let timetableNextTime = 8000;
+	let timetableProgressElements = document.querySelectorAll("#timetableProgress");
+	let timetableProgressNowElements = document.querySelectorAll("#timetableProgressNow");
+	let timetableProgressMaxElement = document.querySelectorAll("#timetableProgressMax");
+	function refreshTimetableSpans() {
+		timetableProgressNowElements.forEach((element) => {
+			element.innerHTML = timetableCycle;
+		});
+		timetableProgressMaxElement.forEach((element) => {
+			element.innerHTML = Math.ceil(k / 5);
+		});
+	}
+	function initTimetableProgress() {
+		timetableProgressElements.forEach((element) => {
+			element.style.width = "0%";
+			element.style.transitionDuration = timetableNextTime + "ms";
+		});
+		refreshTimetableSpans();
+	}
+	function everyTimetableProgress() {
+		console.log(k);
+		timetableTimer += 1000;
+		if (timetableTimer > timetableNextTime) {
+			scrollRozvrh();
+			if (timetableCycle >= Math.ceil(k / 5)) {
+				timetableCycle = 0;
+			}
+			timetableCycle++;
+			timetableTimer = 0;
+			timetableProgressElements.forEach((element) => {
+				element.style.transitionDuration = "0ms";
+				element.style.width = 0 + "%";
+			});
+		} else {
+			timetableProgressElements.forEach((element) => {
+				element.style.transitionDuration = timetableNextTime + "ms";
+				element.style.width = 100 + "%";
+			});
+		}
+		refreshTimetableSpans();
+	}
+
+	initTimetableProgress();
+	setInterval(everyTimetableProgress, 1000);
+
 	var sup = $(".suplov").length;
 
 	if (k >= 6) s = 6;
@@ -655,7 +702,7 @@ $(document).ready(function () {
 	if (sup >= 10) r = 10;
 	else r = sup;
 
-	$(".col-xs-10F").css({ marginLeft: ($(window).width() - 1200) / 2 + "px" });
+	// $(".col-xs-10F").css({ marginLeft: ($(window).width() - 1200) / 2 + "px" });
 });
 
 function isVisible($obj) {
@@ -665,5 +712,3 @@ function isVisible($obj) {
 	var viewportBottom = viewportTop + $(window).height();
 	return elementBottom > viewportTop && elementTop < viewportBottom;
 }
-
-var d = new Date();

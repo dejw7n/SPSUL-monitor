@@ -1,7 +1,11 @@
 <?php
-$sseasSupl = [];
-$sseasOzn = [];
+try {
+    include 'php/sseas.php';
+} catch (Exception $e) {
+}
 
+?>
+<?php
 function findSupl($cancel, $hour)
 {
     for ($i = 0; $i < count($cancel); $i++) {
@@ -78,18 +82,10 @@ function findIt($a, $b)
 }
 function findIfResslovka($char)
 {
-    if (htmlspecialchars($_GET['stredisko']) == 'stribrniky') {
-        if (is_numeric($char)) {
-            return true;
-        } else {
-            return false;
-        }
+    if (is_numeric($char)) {
+        return true;
     } else {
-        if (is_numeric($char)) {
-            return false;
-        } else {
-            return true;
-        }
+        return false;
     }
 }
 function copyArrayTo($ar1, $ar2)
@@ -162,7 +158,7 @@ $array = json_decode($json, true);
 
 $classes = [];
 $file2 = file_get_contents('https://spsul.bakalari.cz/if/2/substitutions/public/' . $today /*.date("Y").date("m").(date("d"))*/, false, $context);
-//print_r($file);
+//print_r($file2);
 $xml2 = simplexml_load_string($file2);
 $json2 = json_encode($xml2);
 $array2 = json_decode($json2, true);
@@ -252,14 +248,13 @@ if (isset($array2['ChangesForClasses']['ChangesForClass'])) {
         array_push($classes, $class);
     }
 }
-if (is_array($array['Classes']['Class'])) {
+if (isset($array['Classes']['Class']) && is_array($array['Classes']['Class'])) {
     for ($i = 0; $i < count($array['Classes']['Class']); $i++) {
         if (findIfResslovka($array['Classes']['Class'][$i]['Abbrev'][0]) && checkClasses($classes, $array['Classes']['Class'][$i]['ID']) && $array['Classes']['Class'][$i]['Abbrev'] != '1DS') {
             array_push($classes, [[$array['Classes']['Class'][$i]['ID'], $array['Classes']['Class'][$i]['Abbrev']], [], []]);
         }
     }
 }
-
 /*                                               Konec Zmenene hodiny + akce(praxe)                                                            */
 
 /*                                                  Ziskani rozvrh pro dany den                                                                */
@@ -272,7 +267,7 @@ for ($i = 0; $i < count($classes); $i++) {
     $json3 = json_encode($xml3);
     $array3 = json_decode($json3, true);
     $day = [];
-    if (isset($array3['Cells']['TimetableCell']) && is_array($array3['Cells']['TimetableCell'])) {
+    if (is_array($array3['Cells']['TimetableCell']) && count($array3['Cells']['TimetableCell']) > 0) {
         for ($j = 0; $j < count($array3['Cells']['TimetableCell']); $j++) {
             if ($array3['Cells']['TimetableCell'][$j]['DayIndex'] == $dayIndex) {
                 $tmp = [];
@@ -343,8 +338,10 @@ for ($i = 0; $i < count($classes); $i++) {
     array_push($classes2, $classes[$i]);
 }
 
-/*                                               Konec Ziskani rozvrh pro dany den                                                              */
-if (count($sseasSupl) == 0) {
+/* Konec ziskani rozvrhu pro dany den */
+
+if (is_array($seeasSupl) && count($sseasSupl) == 0) {
+    //if (count($sseasSupl) == 0) {
     $classes = [];
     /*                                                 Zmenene hodiny + akce(praxe)                                                               */
     $day_of_week = date('N', strtotime(date('l')));
@@ -456,33 +453,31 @@ if (count($sseasSupl) == 0) {
             $json3 = json_encode($xml3);
             $array3 = json_decode($json3, true);
             $day = [];
-            if (isset($array3['Cells']['TimetableCell']) && is_array($array3['Cells']['TimetableCell'])) {
-                for ($j = 0; $j < count($array3['Cells']['TimetableCell']); $j++) {
-                    if ($array3['Cells']['TimetableCell'][$j]['DayIndex'] == $dayIndex) {
-                        $tmp = [];
-                        array_push($tmp, $array3['Cells']['TimetableCell'][$j]['HourIndex'] - 2);
-                        if (isset($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Subject']['Abbrev'])) {
-                            array_push($tmp, 1);
-                            $tmp2 = [];
-                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Subject']['Abbrev']);
-                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Teacher']['Abbrev']);
-                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Room']['Abbrev']);
+            for ($j = 0; $j < count($array3['Cells']['TimetableCell']); $j++) {
+                if ($array3['Cells']['TimetableCell'][$j]['DayIndex'] == $dayIndex) {
+                    $tmp = [];
+                    array_push($tmp, $array3['Cells']['TimetableCell'][$j]['HourIndex'] - 2);
+                    if (isset($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Subject']['Abbrev'])) {
+                        array_push($tmp, 1);
+                        $tmp2 = [];
+                        array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Subject']['Abbrev']);
+                        array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Teacher']['Abbrev']);
+                        array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']['Room']['Abbrev']);
+                        array_push($tmp, $tmp2);
+                    } else {
+                        array_push($tmp, count($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']));
+                        $tmp2 = [];
+                        for ($k = 0; $k < count($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']); $k++) {
+                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Subject']['Abbrev']);
+                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Teacher']['Abbrev']);
+                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Room']['Abbrev']);
+                            array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Group']['Abbrev']);
                             array_push($tmp, $tmp2);
-                        } else {
-                            array_push($tmp, count($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']));
                             $tmp2 = [];
-                            for ($k = 0; $k < count($array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom']); $k++) {
-                                array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Subject']['Abbrev']);
-                                array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Teacher']['Abbrev']);
-                                array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Room']['Abbrev']);
-                                array_push($tmp2, $array3['Cells']['TimetableCell'][$j]['Atoms']['TimetableAtom'][$k]['Group']['Abbrev']);
-                                array_push($tmp, $tmp2);
-                                $tmp2 = [];
-                            }
                         }
-
-                        array_push($day, $tmp);
                     }
+
+                    array_push($day, $tmp);
                 }
             }
             if (count($classes[$i][2]) > 0) {
@@ -555,7 +550,6 @@ for ($i = 0; $i < count($tmpArr); $i++) {
         }
     }
 }
-
 ?>
 <script type="text/javascript">
     var supl = <?php echo json_encode($array2SORT); ?>;
@@ -566,8 +560,8 @@ for ($i = 0; $i < count($tmpArr); $i++) {
     //console.log(suplakos);
     var suplSseas = <?php echo json_encode($sseasSupl); ?>;
     var oznSseas = <?php echo json_encode($sseasOzn); ?>;
-    console.log(suplakos);
-    console.log(supl);
+    //console.log(suplakos);
+    //console.log(supl);
     /*var suplSseas = [];
     var oznSseas = [];*/
 </script>

@@ -1,3 +1,11 @@
+
+body {
+	font-family:sans-serif;
+	background: #fff;
+	
+	padding: 0px;
+}
+
 .clearfix:after {
      visibility: hidden;
      display: block;
@@ -62,8 +70,7 @@ ul li {
 
 /******* SIRKY ***************/
 #hours .day-name, .day-row .day-name { 
-	max-width: 43px;
-	width: 100%;
+	max-width: 40px;
 	/*width: 4.15%;*/
 }
 #hours .item,  .day-row .day-item { 
@@ -133,10 +140,6 @@ ul li {
 
 .day-row .odd {
 	background:rgba(0,0,0,0.02);
-}
-
-.day-row .odl {
-	background:rgba(255,255,255,0.2);
 }
 
 
@@ -265,7 +268,7 @@ ul li {
 	font-size:12px;
 	font-weight: 600;
 	color:#79878D;
-	line-height:66px;
+	line-height:12px;
 	text-align:center;
 }	
 
